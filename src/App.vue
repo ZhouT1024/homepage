@@ -107,14 +107,20 @@ onMounted(() => {
   const styleTitle1 = "font-size: 20px;font-weight: 600;color: rgb(244,167,89);";
   const styleTitle2 = "font-size:12px;color: rgb(244,167,89);";
   const styleContent = "color: rgb(30,152,255);";
-  const title1 = "無名の主页";
+  const title1 = ref(import.meta.env.VITE_SITE_NAME).value;
   const title2 = `
- _____ __  __  _______     ____     __
-|_   _|  \\/  |/ ____\\ \\   / /\\ \\   / /
-  | | | \\  / | (___  \\ \\_/ /  \\ \\_/ /
-  | | | |\\/| |\\___ \\  \\   /    \\   /
- _| |_| |  | |____) |  | |      | |
-|_____|_|  |_|_____/   |_|      |_|`;
+$$\\                                        $$\\                         
+\\__|                                       $$ |                        
+$$\\ $$$$$$\\$$$$\\  $$$$$$\\$$$$\\   $$$$$$\\ $$$$$$\\    $$$$$$\\   $$$$$$\\  
+$$ |$$  _$$  _$$\\ $$  _$$  _$$\\ $$  __$$\\_$$  _|   \\____$$\\ $$  __$$\\ 
+$$ |$$ / $$ / $$ |$$ / $$ / $$ |$$ |  \\__| $$ |     $$$$$$$ |$$ /  $$ |
+$$ |$$ | $$ | $$ |$$ | $$ | $$ |$$ |       $$ |$$\\ $$  __$$ |$$ |  $$ |
+$$ |$$ | $$ | $$ |$$ | $$ | $$ |$$ |       \\$$$$  |\\$$$$$$$ |\\$$$$$$  |
+\\__|\\__| \\__| \\__|\\__| \\__| \\__|\\__|        \\____/  \\_______| \\______/ 
+                                                                       
+                                                                       
+                                                                       
+`;
   const content = `\n\n版本: ${config.version}\n主页: ${config.home}\nGithub: ${config.github}`;
   console.info(`%c${title1} %c${title2} %c${content}`, styleTitle1, styleTitle2, styleContent);
 });

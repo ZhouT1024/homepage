@@ -1,6 +1,7 @@
 <template>
   <!-- 音乐控制面板 -->
   <div
+    ref="musicContainer"
     class="music"
     @mouseenter="volumeShow = true"
     @mouseleave="volumeShow = false"
@@ -116,16 +117,10 @@ const changeMusicIndex = (type) => {
   playerRef.value.changeSong(type);
 };
 
+const musicContainer = ref()
+console.dir(musicContainer)
+
 onMounted(() => {
-  // 空格键事件
-  window.addEventListener("keydown", (e) => {
-    if (!store.musicIsOk) {
-      return ;
-    }
-    if (e.code == "Space") {
-      changePlayState();
-    }
-  });
   // 挂载方法至 window
   window.$openList = openMusicList;
 });

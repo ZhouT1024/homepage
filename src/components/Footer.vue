@@ -23,6 +23,12 @@
           &amp;
           {{ siteIcp }}
         </a>
+        <!-- 公安备案 -->
+        <a href="https://beian.mps.gov.cn/#/query/webSearch?code=50011302222107" rel="noreferrer"
+          target="_blank">
+          &amp;
+          渝公网安备50011302222107
+        </a>
       </div>
       <div v-else class="lrc">
         <Transition name="fade" mode="out-in">
