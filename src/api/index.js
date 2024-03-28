@@ -55,14 +55,14 @@ const hitokotoApis = {
   },
   // 韩小韩接口
   'vvhan': async () => {
-    const response = await fetch('https://api.vvhan.com/api/ian?type=json')
+    const response = await fetch('https://api.vvhan.com/api/ian/rand?type=json')
     const jsonData = await response.json()
     if (jsonData.success !== true) {
       throw new Error('接口调用失败')
     }
     return {
-      hitokoto: jsonData.data.vhan,
-      from: jsonData.data.source,
+      hitokoto: jsonData.data.content,
+      from: jsonData.data.form,
     }
   },
   'hitokoto': async () => {
@@ -74,6 +74,20 @@ const hitokotoApis = {
     }
   },
 }
+
+/**
+ * 数组随机排序
+ * @param {Array<T>} arr 
+ * @returns {Array<T>}
+ */
+const shuffleArray = (arr) => {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 // 获取一言数据
 export const getHitokoto = async () => {
   const cacheKey = 'hitokotoCache'
@@ -89,9 +103,25 @@ export const getHitokoto = async () => {
 
   console.assert(!cache, '使用缓存失败')
   // 缓存过期，请求新的一言
-  const apiNames = Object.keys(hitokotoApis)
-  const num = Math.floor(Math.random() * apiNames.length)
-  const data = await hitokotoApis[apiNames[num]]()
+  let apiNames = Object.keys(hitokotoApis)
+  apiNames = shuffleArray(apiNames)
+  let data
+  for (let i = 0; i < apiNames.length; i++) {
+    const apiName = apiNames[i]
+    try {
+      if (i === 0) {
+        throw new Error('切换一言接口-异常测试')
+      }
+      console.log(`请求${apiName}接口`)
+      data = await hitokotoApis[apiName]()
+      if (data.from && data.hitokoto) {
+        console.log(`${apiName}返回一言成功`)
+        break   
+      }
+    } catch (error) {
+      console.log(`${apiName}接口获取失败`)
+    }
+  }
   // 设置缓存
   let expiresIn = 5000 // 缓存 5秒钟
   sessionStorage.setItem(cacheKey, JSON.stringify(data))
